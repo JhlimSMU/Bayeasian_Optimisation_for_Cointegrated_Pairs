@@ -1,34 +1,38 @@
-# Bayesian Optimization for Cointegrated Pairs
+# Bayesian Optimization & Machine Learning for Cointegrated Pairs  
 
-## 📌 Overview
-This project implements a **cointegration-based pairs trading strategy** enhanced with **Bayesian Optimization**. The framework identifies cointegrated asset pairs, constructs spreads, and optimizes trading parameters to maximize **risk-adjusted returns** while controlling drawdowns and turnover.
+## 📌 Overview  
+This project develops a **cointegration-based pairs trading strategy** enhanced with **Bayesian Optimization** and **XGBoost forecasting**. The framework identifies cointegrated pairs, constructs spreads, and predicts future spread movements. It then optimizes entry/exit rules, hedge ratios, and stop-loss settings to maximize **risk-adjusted returns** while controlling drawdowns and turnover.  
 
-## ⚙️ Methodology
+## ⚙️ Methodology  
 - **Pair Selection:** Engle-Granger & Johansen tests to identify cointegrated pairs.  
 - **Spread Construction:** OLS/Johansen eigenvector hedge ratio.  
-- **Signal Generation:** Rolling z-score of spreads with entry/exit thresholds.  
-- **Bayesian Optimization:** Gaussian Process with Expected Improvement to tune:  
+- **Feature Engineering:** SMA correlations, volatility ratios, half-life, Bollinger %, rolling beta, lead-lag features.  
+- **Forecasting:** XGBoost model to predict next-day spread changes.  
+- **Bayesian Optimization:** Gaussian Process (Expected Improvement) to tune trading rules:  
   - Entry/exit thresholds  
-  - Lookback window  
+  - Lookback windows  
   - Stop-loss & timeout rules  
   - Hedge ratios  
-- **Validation:** Rolling walk-forward out-of-sample testing.  
-- **Risk Controls:** Max exposure per pair, sector caps, and transaction cost modeling.  
+- **Validation:** Rolling walk-forward out-of-sample testing to avoid lookahead bias.  
+- **Risk Controls:** Max exposure per pair, sector diversification, and transaction cost modeling.  
 
-## 📊 Results
-- Robust **out-of-sample Sharpe** compared to fixed-rule benchmarks.  
-- Reduced drawdowns and stable cumulative PnL across multiple market regimes.  
-- Visualization outputs:  
+## 📊 Results  
+- **Annualized Return:** 19.8%  
+- **Sharpe Ratio:** 2.53  
+- **Max Drawdown:** 3%  
+- **Key Insights:**  
+  - ML-based approach outperformed buy-and-hold (Sharpe 1.71, MDD 8.5%) and trend-following (Sharpe -0.27).  
+  - Diversification across 17 pairs reduced portfolio-level drawdown.  
+- **Visual Outputs:**  
   - Equity curve & drawdown plots  
-  - Parameter convergence  
-  - Pair selection diagnostics  
+  - Forecast vs actual spread diagnostics  
+  - Parameter convergence and pair selection timelines  
 
-## 🛠️ Requirements
+## 🛠️ Requirements  
 - Python 3.9+  
 - Jupyter Notebook  
-- Libraries: `pandas`, `numpy`, `statsmodels`, `scikit-learn`, `matplotlib`, `bayesian-optimization`  
+- Libraries: `pandas`, `numpy`, `statsmodels`, `scikit-learn`, `xgboost`, `matplotlib`, `bayesian-optimization`  
 
-Install dependencies:
+Install dependencies:  
 ```bash
 pip install -r requirements.txt
-
